@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { NavLink } from 'react-router-dom';
 export default function KaydedilenlerListesi(props) {
   return (
     <div className="saved-list">
@@ -7,7 +7,9 @@ export default function KaydedilenlerListesi(props) {
       {props.list.map(movie => (
         <span className="saved-movie">{movie.title}</span>
       ))}
-      <div className="home-button">Anasayfa</div>
+      <NavLink to="/">
+        <div className="home-button">Anasayfa</div>
+      </NavLink>
     </div>
   );
 }
