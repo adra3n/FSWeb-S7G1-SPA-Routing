@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Routes, Route } from "react-router-dom"
+import { Switch, Route } from "react-router-dom"
 import KaydedilenlerListesi from './Filmler/KaydedilenlerListesi';
 import { Router } from 'express';
 import Film from './Filmler/Film';
@@ -39,10 +39,10 @@ export default function App() {
     <div>
       <KaydedilenlerListesi list={[ /* Burası esnek */]} />
       <div>
-        <Routes>
+        <Switch>
           <Route path={"/filmler/:id"} element={<Film KaydedilenlerListesineEkle={KaydedilenlerListesineEkle} />} />
           <Route path={"/"} element={<FilmListesi movieList={movieList} />} />
-        </Routes>
+        </Switch>
       </div>
     </div >
   );
