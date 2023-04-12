@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import axios from 'axios'
 
 import KaydedilenlerListesi from './Filmler/KaydedilenlerListesi'
@@ -36,15 +36,15 @@ export default function App() {
       : null
   // Burası esnek. Aynı filmin birden fazla kez "saved" e eklenmesini engelleyin
   return (
-    <BrowserRouter>
+    <div>
       <KaydedilenlerListesi list={saved} />
       <Routes>
         <Route path="/" element={<FilmListesi movies={movieList} />} />
         <Route
           path="/filmler/:id"
-          element={<Film cbSave={KaydedilenlerListesineEkle} />}
+          element={<Film saveHandler={KaydedilenlerListesineEkle} />}
         />
       </Routes>
-    </BrowserRouter>
+    </div>
   )
 }

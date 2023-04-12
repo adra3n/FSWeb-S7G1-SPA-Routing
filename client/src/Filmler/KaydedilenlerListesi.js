@@ -19,7 +19,7 @@ export default function KaydedilenlerListesi(props) {
         </span>
       ))}
       <Link to="/">
-        <div className="home-button">Anasayfa</div>
+        <button className="home-button">Anasayfa</button>
       </Link>
     </div>
   )

@@ -29,7 +29,7 @@ export default function Film(props) {
 
   // Yalnızca esnek görevlere geçtiğinizde burdaki yorum etiketini kaldırın
   const filmiKaydet = (evt) => {
-    props.cbSave(id)
+    props.saveHandler(id)
   }
 
   if (!movie) {
@@ -39,9 +39,9 @@ export default function Film(props) {
   return (
     <div className="save-wrapper">
       <FilmCard movie={movie} />
-      <div onClick={filmiKaydet} className="save-button">
+      <button onClick={filmiKaydet} className="save-button">
         Kaydet
-      </div>
+      </button>
     </div>
   )
 }
