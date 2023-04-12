@@ -1,31 +1,18 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { useHistory } from 'react-router-dom';
+import React from 'react'
+import { useNavigate } from 'react-router-dom'
+
+import FilmCard from './FilmCard'
+
 export default function FilmListesi(props) {
+  const navigate = useNavigate()
+
   return (
     <div className="movie-list">
-      {props.movies.map(movie => (
-        <FilmDetayları key={movie.id} movie={movie} />
+      {props.movies.map((movie) => (
+        <div key={movie.id} onClick={() => navigate(`/filmler/${movie.id}`)}>
+          <FilmCard movie={movie} />
+        </div>
       ))}
     </div>
-  );
-}
-
-function FilmDetayları(props) {
-  // const navigate = useHistory();
-  const { title, director, metascore } = props.movie;
-
-  return (
-    <Link>
-      <div className="movie-card">
-        <h2>{title}</h2>
-        <div className="movie-director">
-          Director: <em>{director}</em>
-        </div>
-        <div className="movie-metascore">
-          Metascore: <strong>{metascore}</strong>
-        </div>
-      </div>
-    </Link>
-  );
+  )
 }

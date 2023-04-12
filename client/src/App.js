@@ -1,49 +1,50 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Switch, Route } from "react-router-dom"
-import KaydedilenlerListesi from './Filmler/KaydedilenlerListesi';
-import { Router } from 'express';
-import Film from './Filmler/Film';
-import FilmListesi from "./Filmler/FilmListesi"
+import React, { useState, useEffect } from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import axios from 'axios'
 
-
+import KaydedilenlerListesi from './Filmler/KaydedilenlerListesi'
+import FilmListesi from './Filmler/FilmListesi'
+import Film from './Filmler/Film'
 
 export default function App() {
-  const [saved, setSaved] = useState([]); // Stretch: the ids of "saved" movies
-  const [movieList, setMovieList] = useState([]);
+  const [saved, setSaved] = useState([]) // Stretch: the ids of "saved" movies
+  const [movieList, setMovieList] = useState([])
 
   useEffect(() => {
     const FilmleriAl = () => {
       axios
         .get('http://localhost:5001/api/filmler') // Burayı Postman'le çalışın
-        .then(response => {
-          console.log(response.data)
+        .then((response) => {
           // Bu kısmı log statementlarıyla çalışın
-          // ve burdan gelen response'u 'movieList' e aktarın
+          console.log('data cekildi>', response)
           setMovieList(response.data)
+          // ve burdan gelen response'u 'movieList' e aktarın
         })
-        .catch(error => {
-          console.error('Sunucu Hatası', error);
-        });
+        .catch((error) => {
+          console.error('Sunucu Hatası', error)
+        })
     }
-    FilmleriAl();
-  }, []);
+    FilmleriAl()
+  }, [])
 
-  const KaydedilenlerListesineEkle = id => {
-    // Burası esnek. Aynı filmin birden fazla kez "saved" e eklenmesini engelleyin
-    // let savedArr = [...saved];
-    // !saved[id] ? savedArr.push(saved[id]) : console.log("Already saved!");
-  };
-
+  const KaydedilenlerListesineEkle = (id) =>
+    !saved.includes(movieList.find((movie) => movie.id === parseInt(id)))
+      ? setSaved([
+          ...saved,
+          movieList.find((movie) => movie.id === parseInt(id)),
+        ])
+      : null
+  // Burası esnek. Aynı filmin birden fazla kez "saved" e eklenmesini engelleyin
   return (
-    <div>
-      <KaydedilenlerListesi list={[ /* Burası esnek */]} />
-      <div>
-        <Switch>
-          <Route path={"/filmler/:id"} element={<Film KaydedilenlerListesineEkle={KaydedilenlerListesineEkle} />} />
-          <Route path={"/"} element={<FilmListesi movieList={movieList} />} />
-        </Switch>
-      </div>
-    </div >
-  );
+    <BrowserRouter>
+      <KaydedilenlerListesi list={saved} />
+      <Routes>
+        <Route path="/" element={<FilmListesi movies={movieList} />} />
+        <Route
+          path="/filmler/:id"
+          element={<Film cbSave={KaydedilenlerListesineEkle} />}
+        />
+      </Routes>
+    </BrowserRouter>
+  )
 }

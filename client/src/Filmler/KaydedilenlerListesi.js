@@ -1,15 +1,26 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React from 'react'
+import { Link, NavLink } from 'react-router-dom'
+
 export default function KaydedilenlerListesi(props) {
+  let activeStyle = {
+    color: 'red',
+  }
   return (
     <div className="saved-list">
       <h3>Kaydedilen Filmler:</h3>
-      {props.list.map(movie => (
-        <span className="saved-movie">{movie.title}</span>
+      {props.list.map((movie) => (
+        <span key={movie.id} className="saved-movie">
+          <NavLink
+            style={({ isActive }) => (isActive ? activeStyle : undefined)}
+            to={`filmler/${movie.id}`}
+          >
+            {movie.title}
+          </NavLink>
+        </span>
       ))}
-      <NavLink to="/">
+      <Link to="/">
         <div className="home-button">Anasayfa</div>
-      </NavLink>
+      </Link>
     </div>
-  );
+  )
 }
